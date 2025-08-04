@@ -6,4 +6,4 @@
 
 [node name="ExpressionHandler" type="Node" parent="."]
 script = ExtResource("1_gvqed")
-expression_string = "1 * -727"
+expression_string = "2 ^ 0.5"

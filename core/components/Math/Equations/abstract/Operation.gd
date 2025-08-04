@@ -1,6 +1,7 @@
 class_name MathOperation
 
 enum OperationTypes {
+	POWER,
 	MULTIPLY,
 	DIVIDE,
 	ADD,
@@ -8,6 +9,7 @@ enum OperationTypes {
 }
 
 const OPERATION_STRINGS = {
+	OperationTypes.POWER: "^",
 	OperationTypes.MULTIPLY: "*",
 	OperationTypes.DIVIDE: "/",
 	OperationTypes.ADD: "+",
@@ -23,21 +25,29 @@ func connect_to_variables(variables: Array[AlgebraVariable]) -> void:
 	self.connected_variables = variables
 
 
-func process() -> float:
+func solve() -> float:
 	var variable_values: Array[float] = []
 	for variable in connected_variables:
 		variable_values.append(variable.get_value())
 	
-	var result: float = self.process_values(variable_values)
+	var result: float = self.solve_values(variable_values)
 	last_result = result
 	return result
 
-static func process_values(values: Array[float]) -> float:
+func is_solveable() -> bool:
+	for variable in self.connected_variables:
+		if variable.type == AlgebraVariable.VariableTypes.UNSET:
+			return false
+	
+	return true
+
+## Should be overrided
+func solve_values(values: Array[float]) -> float:
 	return 0.0
 
 
 static func sort_operations(operation_a: MathOperation, operation_b: MathOperation) -> bool:
-	if OperationTypes.get(operation_a.type) < OperationTypes.get(operation_b.type):
+	if operation_a.type < operation_b.type:
 		return true
 	
 	return false
