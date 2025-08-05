@@ -17,9 +17,14 @@ const OPERATION_STRINGS = {
 }
 
 var type: OperationTypes
-var last_result: AlgebraVariable
+var last_result: AlgebraVariable:
+	set(value):
+		if last_result != value: self.last_result_changed.emit(value)
+		last_result = value
 
 var connected_variables: Array[AlgebraVariable]
+
+signal last_result_changed(new_value)
 
 func connect_to_variables(variables: Array[AlgebraVariable]) -> void:
 	self.connected_variables = variables

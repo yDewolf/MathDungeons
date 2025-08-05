@@ -15,28 +15,39 @@ func solve() -> AlgebraVariable:
 	var last_result: AlgebraVariable = AlgebraVariable.new(0)
 	
 	var start_time: int = Time.get_ticks_usec()
+	
+	var sub_expressions: Array[MathExpression] = MathExpression._get_sub_expressions(current_map, true)
+	var operations: Array[MathOperation] = MathExpression._get_operations(current_map, true)
+	
 	while true:
 		current_step += 1
-		var sub_expressions: Array[MathExpression] = MathExpression._get_sub_expressions(current_map, true)
 		if sub_expressions.is_empty():
-			var operations: Array[MathOperation] = MathExpression._get_operations(current_map, true)
 			if operations.is_empty():
 				break
 			
-			last_result = solve_operations(operations, current_map)
+			last_result = solve_next_operation(operations, current_map)
 		
-		for idx in range(len(current_map)):
-			var part = current_map[idx]
-			if part is MathOperation:
-				var values: Array[AlgebraVariable] = [
-					current_map[idx - 1], current_map[idx + 1]
-				]
-				part.connect_to_variables(values)
+		#for idx in range(len(current_map)):
+			#var part = current_map[idx]
+			#if part is MathExpression:
+				#if part.type != MathExpression.VariableTypes.SUB_EXPRESSION:
+					#continue
+				#
+				#var values: Array[AlgebraVariable] = [
+					#current_map.get(idx - 1), current_map.get(idx + 1)
+				#]
+				#part.expression_map[1].connect_to_variables(values)
+			#
+			#if part is MathOperation:
+				#var values: Array[AlgebraVariable] = [
+					#current_map[idx - 1], current_map[idx + 1]
+				#]
+				#part.connect_to_variables(values)
 		
 		if sub_expressions.is_empty():
 			break
 		
-		last_result = solve_sub_expressions(sub_expressions, current_map)
+		last_result = solve_next_sub_expression(sub_expressions, current_map)
 		if last_result == null:
 			continue
 	
@@ -44,7 +55,7 @@ func solve() -> AlgebraVariable:
 	
 	return last_result
 
-func solve_sub_expressions(expressions: Array[MathExpression], current_map: Array) -> AlgebraVariable:
+func solve_next_sub_expression(expressions: Array[MathExpression], current_map: Array) -> AlgebraVariable:
 	if expressions.is_empty():
 		return
 	
@@ -54,12 +65,12 @@ func solve_sub_expressions(expressions: Array[MathExpression], current_map: Arra
 	## Solve the operation with highest priority
 	var result = target_expression.solve()
 	var idx: int = current_map.find(target_expression)
-	current_map.remove_at(idx)
-	current_map.insert(idx, result)
+	#current_map.remove_at(idx)
+	#current_map.insert(idx, result)
 	
 	return result
 
-func solve_operations(operations: Array[MathOperation], current_map: Array) -> AlgebraVariable:
+func solve_next_operation(operations: Array[MathOperation], current_map: Array) -> AlgebraVariable:
 	if operations.is_empty():
 		return
 	
@@ -76,19 +87,10 @@ func solve_operations(operations: Array[MathOperation], current_map: Array) -> A
 			current_op_position -= 1
 	
 	operations.remove_at(0)
-	current_map.remove_at(current_op_position)
-	current_map.insert(current_op_position, AlgebraVariable.from_variable(result))
+	#current_map.remove_at(current_op_position)
+	#current_map.insert(current_op_position, AlgebraVariable.from_variable(result))
 	
 	return result
-	#
-	#sub_expressions.remove_at(0)
-	#
-	### Update other sub_expressions:
-	#if sub_expressions.is_empty():
-		#return result
-	
-	#
-	#return result
 
 
 func get_value() -> float:
@@ -100,42 +102,45 @@ func get_value() -> float:
 ## Example:
 ## 7 / 3 + 3
 static func create_from_string(expression_string: String) -> MathExpression:
-	var splitted: PackedStringArray = expression_string.split(" ")	
+	var splitted: PackedStringArray = expression_string.split(" ")
 	var new_expression_map: Array = []
 	## Parse string to classes
 	for charactere in splitted:
 		var part = MathExpression.parse_syntax(charactere)
 		new_expression_map.append(part)
 	
-	var final_map: Array = []
-	## Connect operations
-	for idx in range(len(new_expression_map)):
-		var part = new_expression_map[idx]
-		if part is MathOperation:
-			var values: Array[AlgebraVariable] = [
-				new_expression_map[idx - 1], new_expression_map[idx + 1]
-			]
-			part.connect_to_variables(values)
-			var sub_expression: MathExpression = MathExpression.from_operation(part)
-			final_map.append(sub_expression)
+	var operations: Array[MathOperation] = MathExpression._get_operations(new_expression_map, true)
+	for operation in operations:
+		var idx: int = new_expression_map.find(operation)
+		var variables: Array[AlgebraVariable] = [
+			new_expression_map[idx - 1], new_expression_map[idx + 1]
+		]
+		operation.connect_to_variables(variables)
+		var sub_expression: SubMathExpression = SubMathExpression.from_operation(operation)
+		new_expression_map[idx] = sub_expression
+		
+		new_expression_map.erase(variables[0])
+		new_expression_map.erase(variables[1])
+	
+	#var final_map: Array = []
+	### Connect operations
+	#for idx in range(len(new_expression_map)):
+		#var part = new_expression_map[idx]
+		#if part is MathOperation:
+			### FIXME: This makes so the values are shared between two sub expressions
+			#var values: Array[AlgebraVariable] = [
+				#new_expression_map[idx - 1], new_expression_map[idx + 1]
+			#]
+			#part.connect_to_variables(values)
+			#var sub_expression: SubMathExpression = SubMathExpression.from_operation(part)
+			#final_map.append(sub_expression)
 	
 	var new_expression: MathExpression = MathExpression.new()
-	new_expression.expression_map = final_map
+	new_expression.expression_map = new_expression_map
 	
 	return new_expression
 
-static func from_operation(operation: MathOperation) -> MathExpression:
-	var new_expression: MathExpression = MathExpression.new()
-	new_expression.type = AlgebraVariable.VariableTypes.SUB_EXPRESSION
-	new_expression.priority = operation.type
-	## TODO: REMAKE THIS LATER (THIS CAN BE A REALLY BAD PROBLEM FOR MULTIPLE VARIABLE SYSTEMS)
-	new_expression.expression_map = [
-		operation.connected_variables[0],
-		operation,
-		operation.connected_variables[1]
-	]
-	
-	return new_expression
+
 
 
 func get_sub_expressions(sorted: bool) -> Array[MathExpression]:
