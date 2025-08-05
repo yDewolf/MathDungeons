@@ -4,37 +4,26 @@ class_name MathExpression
 var expression_map: Array
 const OPERATION_FOLDER: String = "res://core/components/Math/Operations/"
 
+var priority: int = 0
+
 func _init() -> void:
 	self.type = AlgebraVariable.VariableTypes.EXPRESSION
 
-func solve() -> float:
+func solve() -> AlgebraVariable:
 	var current_step: int = 0
 	var current_map: Array = expression_map.duplicate()
-	var last_result: float = 0
+	var last_result: AlgebraVariable = AlgebraVariable.new(0)
 	
 	var start_time: int = Time.get_ticks_usec()
 	while true:
 		current_step += 1
-		var operations: Array[MathOperation] = MathExpression._get_operations(current_map, true)
-		## Solve the operation with highest priority
-		var result = operations[0].solve()
-		last_result = result
-		## Replace the operation and its variables to its result
-		var current_op_position: int = current_map.find(operations[0])
-		var offset_amount: int = 0
-		for variable in operations[0].connected_variables:
-			var idx = current_map.find(variable)
-			current_map.remove_at(idx)
-			if idx < current_op_position:
-				current_op_position -= 1
-		
-		current_map.remove_at(current_op_position)
-		current_map.insert(current_op_position, AlgebraVariable.new(result))
-		operations.remove_at(0)
-		
-		## Update other operations:
-		if operations.is_empty():
-			break
+		var sub_expressions: Array[MathExpression] = MathExpression._get_sub_expressions(current_map, true)
+		if sub_expressions.is_empty():
+			var operations: Array[MathOperation] = MathExpression._get_operations(current_map, true)
+			if operations.is_empty():
+				break
+			
+			last_result = solve_operations(operations, current_map)
 		
 		for idx in range(len(current_map)):
 			var part = current_map[idx]
@@ -43,13 +32,67 @@ func solve() -> float:
 					current_map[idx - 1], current_map[idx + 1]
 				]
 				part.connect_to_variables(values)
+		
+		if sub_expressions.is_empty():
+			break
+		
+		last_result = solve_sub_expressions(sub_expressions, current_map)
+		if last_result == null:
+			continue
 	
 	print_rich("[color=orange]DEBUG: [color=white]TOOK [color=cyan]", Time.get_ticks_usec() - start_time, "us[color=white] to solve a equation")
 	
 	return last_result
 
+func solve_sub_expressions(expressions: Array[MathExpression], current_map: Array) -> AlgebraVariable:
+	if expressions.is_empty():
+		return
+	
+	var target_expression: MathExpression = expressions[0]
+	expressions.remove_at(0)
+	
+	## Solve the operation with highest priority
+	var result = target_expression.solve()
+	var idx: int = current_map.find(target_expression)
+	current_map.remove_at(idx)
+	current_map.insert(idx, result)
+	
+	return result
+
+func solve_operations(operations: Array[MathOperation], current_map: Array) -> AlgebraVariable:
+	if operations.is_empty():
+		return
+	
+	var target_operation: MathOperation = operations[0]
+	var result = target_operation.solve()
+	
+	## Replace the operation and its variables to its result
+	var current_op_position: int = current_map.find(target_operation)
+	var offset_amount: int = 0
+	for variable in target_operation.connected_variables:
+		var idx = current_map.find(variable)
+		current_map.remove_at(idx)
+		if idx < current_op_position:
+			current_op_position -= 1
+	
+	operations.remove_at(0)
+	current_map.remove_at(current_op_position)
+	current_map.insert(current_op_position, AlgebraVariable.from_variable(result))
+	
+	return result
+	#
+	#sub_expressions.remove_at(0)
+	#
+	### Update other sub_expressions:
+	#if sub_expressions.is_empty():
+		#return result
+	
+	#
+	#return result
+
+
 func get_value() -> float:
-	return self.solve()
+	return self.solve().get_value()
 
 
 ## Expression format:
@@ -57,14 +100,14 @@ func get_value() -> float:
 ## Example:
 ## 7 / 3 + 3
 static func create_from_string(expression_string: String) -> MathExpression:
-	var splitted: PackedStringArray = expression_string.split(" ")
-	
+	var splitted: PackedStringArray = expression_string.split(" ")	
 	var new_expression_map: Array = []
 	## Parse string to classes
 	for charactere in splitted:
 		var part = MathExpression.parse_syntax(charactere)
 		new_expression_map.append(part)
 	
+	var final_map: Array = []
 	## Connect operations
 	for idx in range(len(new_expression_map)):
 		var part = new_expression_map[idx]
@@ -73,11 +116,30 @@ static func create_from_string(expression_string: String) -> MathExpression:
 				new_expression_map[idx - 1], new_expression_map[idx + 1]
 			]
 			part.connect_to_variables(values)
+			var sub_expression: MathExpression = MathExpression.from_operation(part)
+			final_map.append(sub_expression)
 	
 	var new_expression: MathExpression = MathExpression.new()
-	new_expression.expression_map = new_expression_map
+	new_expression.expression_map = final_map
 	
 	return new_expression
+
+static func from_operation(operation: MathOperation) -> MathExpression:
+	var new_expression: MathExpression = MathExpression.new()
+	new_expression.type = AlgebraVariable.VariableTypes.SUB_EXPRESSION
+	new_expression.priority = operation.type
+	## TODO: REMAKE THIS LATER (THIS CAN BE A REALLY BAD PROBLEM FOR MULTIPLE VARIABLE SYSTEMS)
+	new_expression.expression_map = [
+		operation.connected_variables[0],
+		operation,
+		operation.connected_variables[1]
+	]
+	
+	return new_expression
+
+
+func get_sub_expressions(sorted: bool) -> Array[MathExpression]:
+	return MathExpression._get_sub_expressions(self.expression_map, sorted) 
 
 func get_operations(sorted: bool = false) -> Array[MathOperation]:
 	return MathExpression._get_operations(self.expression_map, sorted)
@@ -85,6 +147,17 @@ func get_operations(sorted: bool = false) -> Array[MathOperation]:
 func get_variables() -> Array[AlgebraVariable]:
 	return MathExpression._get_variables(self.expression_map)
 
+
+static func _get_sub_expressions(map: Array, sorted: bool = false) -> Array[MathExpression]:
+	var expressions: Array[MathExpression] = []
+	for part in map:
+		if part is MathExpression:
+			expressions.append(part)
+	
+	if sorted:
+		expressions.sort_custom(MathExpression.sort_expressions)
+	
+	return expressions
 
 static func _get_operations(map: Array, sorted: bool = false) -> Array[MathOperation]:
 	var operations: Array[MathOperation] = []
@@ -139,3 +212,10 @@ static func parse_variable(charactere: String) -> AlgebraVariable:
 		variable.name = charactere
 	
 	return variable
+
+
+static func sort_expressions(expression_a: MathExpression, expression_b: MathExpression) -> bool:
+	if expression_a.priority < expression_b.priority:
+		return true
+	
+	return false

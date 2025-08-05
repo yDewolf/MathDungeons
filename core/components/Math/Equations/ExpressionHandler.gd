@@ -5,4 +5,4 @@ extends Node
 func _ready() -> void:
 	var expression = MathExpression.create_from_string(expression_string)
 	var result = expression.solve()
-	print(result)
+	print(result.get_value())
