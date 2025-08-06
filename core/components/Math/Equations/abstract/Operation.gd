@@ -8,6 +8,14 @@ enum OperationTypes {
 	SUBTRACT,
 }
 
+const OPERATION_PRIORITIES = {
+	OperationTypes.POWER: 0,
+	OperationTypes.DIVIDE: 1,
+	OperationTypes.MULTIPLY: 1,
+	OperationTypes.SUBTRACT: 2,
+	OperationTypes.ADD: 2,
+}
+
 const OPERATION_STRINGS = {
 	OperationTypes.POWER: "^",
 	OperationTypes.MULTIPLY: "*",
@@ -52,7 +60,7 @@ func solve_values(values: Array[AlgebraVariable]) -> AlgebraVariable:
 
 
 static func sort_operations(operation_a: MathOperation, operation_b: MathOperation) -> bool:
-	if operation_a.type < operation_b.type:
+	if OPERATION_PRIORITIES.get(operation_a.type) < OPERATION_PRIORITIES.get(operation_b.type):
 		return true
 	
 	return false

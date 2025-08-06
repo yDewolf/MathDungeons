@@ -19,10 +19,16 @@ class_name RandomEquationGen
 @export var inclusive: bool = true
 
 func _ready() -> void:
+	return
+	var start_time: int = Time.get_ticks_usec()
+
 	var expression_string: String = generate_expression_string()
 	var expression: MathExpression = MathExpression.create_from_string(expression_string)
 	print(expression_string)
 	print("= ", expression.solve().get_value())
+	
+	print_rich("[color=orange]DEBUG: [color=white]TOOK [color=cyan]", Time.get_ticks_usec() - start_time, "us[color=white] to solve a equation")
+
 
 
 func random_number() -> float:
