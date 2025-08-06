@@ -17,8 +17,8 @@ var value: float:
 
 signal value_changed(new_value)
 
-func _init(value: float = 0) -> void:
-	self.value = value
+func _init(value_: float = 0) -> void:
+	self.value = value_
 
 static func from_variable(variable: AlgebraVariable) -> AlgebraVariable:
 	var new_variable = AlgebraVariable.new(variable.get_value())

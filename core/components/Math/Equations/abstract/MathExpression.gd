@@ -10,7 +10,7 @@ func _init() -> void:
 	self.type = AlgebraVariable.VariableTypes.EXPRESSION
 
 func solve() -> AlgebraVariable:
-	var current_step: int = 0
+	#var current_step: int = 0
 	var current_map: Array = expression_map.duplicate()
 	var last_result: AlgebraVariable = AlgebraVariable.new(0)
 	
@@ -20,7 +20,7 @@ func solve() -> AlgebraVariable:
 	var operations: Array[MathOperation] = MathExpression._get_operations(current_map, true)
 	
 	while true:
-		current_step += 1
+		#current_step += 1
 		if sub_expressions.is_empty():
 			if operations.is_empty():
 				break
@@ -47,7 +47,7 @@ func solve_next_sub_expression(expressions: Array[MathExpression], current_map: 
 	
 	## Solve the operation with highest priority
 	var result = target_expression.solve()
-	var idx: int = current_map.find(target_expression)
+	#var idx: int = current_map.find(target_expression)
 	#current_map.remove_at(idx)
 	#current_map.insert(idx, result)
 	
@@ -63,7 +63,7 @@ func solve_next_operation(operations: Array[MathOperation], current_map: Array) 
 	
 	## Replace the operation and its variables to its result
 	var current_op_position: int = current_map.find(target_operation)
-	var offset_amount: int = 0
+	#var offset_amount: int = 0
 	for variable in target_operation.connected_variables:
 		var idx = current_map.find(variable)
 		current_map.remove_at(idx)
@@ -168,7 +168,7 @@ static func parse_syntax(charactere: String):
 	return MathExpression.parse_variable(charactere)
 
 static func parse_operation(operation_idx: int) -> MathOperation:
-	var operation_key = MathOperation.OPERATION_STRINGS.keys()[operation_idx]
+	#var operation_key = MathOperation.OPERATION_STRINGS.keys()[operation_idx]
 	
 	var keys = MathOperation.OperationTypes.keys()
 	var path = MathExpression.OPERATION_FOLDER + "Math" + MathOperation.OperationTypes.keys()[operation_idx] + ".gd"
@@ -187,7 +187,7 @@ static func parse_variable(charactere: String) -> AlgebraVariable:
 		charactere.erase(0)
 	
 	var value: float = charactere.to_float()
-	var variable: AlgebraVariable = AlgebraVariable.new(value)
+	var variable: AlgebraVariable = AlgebraVariable.new(value * value_modifier)
 	if not charactere.is_valid_float():
 		variable.type = AlgebraVariable.VariableTypes.UNSET
 		variable.name = charactere
