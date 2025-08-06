@@ -59,7 +59,7 @@ func solve_next_operation(operations: Array[MathOperation], current_map: Array) 
 	
 	var target_operation: MathOperation = operations[0]
 	var result = target_operation.solve()
-	print("Solving: ", target_operation.connected_variables[0].value ," ", target_operation.OPERATION_STRINGS.get(target_operation.type), " ", target_operation.connected_variables[1].value)
+	#print("Solving: ", target_operation.connected_variables[0].value ," ", target_operation.OPERATION_STRINGS.get(target_operation.type), " ", target_operation.connected_variables[1].value)
 	
 	## Replace the operation and its variables to its result
 	var current_op_position: int = current_map.find(target_operation)
@@ -71,8 +71,6 @@ func solve_next_operation(operations: Array[MathOperation], current_map: Array) 
 			current_op_position -= 1
 	
 	operations.remove_at(0)
-	#current_map.remove_at(current_op_position)
-	#current_map.insert(current_op_position, AlgebraVariable.from_variable(result))
 	
 	return result
 
@@ -89,9 +87,22 @@ static func create_from_string(expression_string: String) -> MathExpression:
 	var splitted: PackedStringArray = expression_string.split(" ")
 	var new_expression_map: Array = []
 	## Parse string to classes
+	var variable_name: String = "a"
+	var name_idx: int = 0
+	var name_iteration: int = 0
 	for charactere in splitted:
-		var part = MathExpression.parse_syntax(charactere)
+		var part = MathExpression.parse_syntax(charactere, variable_name)
 		new_expression_map.append(part)
+		if part is MathOperation:
+			continue
+		
+		if part is AlgebraVariable:
+			variable_name = AlgebraVariable.NAME_PRESET[name_idx] + str(name_iteration)
+			
+			name_idx += 1
+			if name_idx > len(AlgebraVariable.NAME_PRESET):
+				name_idx = 0
+				name_iteration += 1
 	
 	var operations: Array[MathOperation] = MathExpression._get_operations(new_expression_map, true)
 	for operation in operations:
@@ -99,9 +110,6 @@ static func create_from_string(expression_string: String) -> MathExpression:
 		var variables: Array[AlgebraVariable] = [
 			new_expression_map[idx - 1], new_expression_map[idx + 1]
 		]
-		#if operation.type == MathOperation.OperationTypes.SUBTRACT:
-			#operation = MathExpression.parse_operation(MathOperation.OperationTypes.ADD)
-			#variables[1].set_value(-variables[1].get_value())
 		
 		operation.connect_to_variables(variables)
 		
@@ -160,12 +168,12 @@ static func _get_variables(map: Array) -> Array[AlgebraVariable]:
 	return variables
 
 
-static func parse_syntax(charactere: String):
+static func parse_syntax(charactere: String, variable_name: String = ""):
 	var operation_idx = MathOperation.OPERATION_STRINGS.values().find(charactere)
 	if operation_idx != -1:
 		return MathExpression.parse_operation(operation_idx)
 	
-	return MathExpression.parse_variable(charactere)
+	return MathExpression.parse_variable(charactere, variable_name)
 
 static func parse_operation(operation_idx: int) -> MathOperation:
 	#var operation_key = MathOperation.OPERATION_STRINGS.keys()[operation_idx]
@@ -177,7 +185,7 @@ static func parse_operation(operation_idx: int) -> MathOperation:
 	
 	return operation
 
-static func parse_variable(charactere: String) -> AlgebraVariable:
+static func parse_variable(charactere: String, variable_name: String = "") -> AlgebraVariable:
 	var value_modifier: int = 1
 	if charactere.begins_with("-"):
 		charactere.erase(0)
@@ -188,6 +196,7 @@ static func parse_variable(charactere: String) -> AlgebraVariable:
 	
 	var value: float = charactere.to_float()
 	var variable: AlgebraVariable = AlgebraVariable.new(value * value_modifier)
+	variable.name = variable_name
 	if not charactere.is_valid_float():
 		variable.type = AlgebraVariable.VariableTypes.UNSET
 		variable.name = charactere

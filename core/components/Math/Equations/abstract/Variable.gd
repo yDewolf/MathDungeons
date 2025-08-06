@@ -7,6 +7,8 @@ enum VariableTypes {
 	SUB_EXPRESSION
 }
 
+const NAME_PRESET = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
 var type: VariableTypes = VariableTypes.NUMBER
 var name: String = ""
 
