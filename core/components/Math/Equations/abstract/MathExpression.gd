@@ -191,7 +191,7 @@ static func parse_syntax(charactere: String):
 	
 	return MathExpression.parse_variable(charactere)
 
-static func parse_operation(operation_idx: int):
+static func parse_operation(operation_idx: int) -> MathOperation:
 	var operation_key = MathOperation.OPERATION_STRINGS.keys()[operation_idx]
 	
 	var keys = MathOperation.OperationTypes.keys()
