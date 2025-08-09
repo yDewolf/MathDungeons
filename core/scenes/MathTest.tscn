@@ -1,9 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8ow2nsxtjtj3"]
+[gd_scene load_steps=3 format=3 uid="uid://b8ow2nsxtjtj3"]
 
 [ext_resource type="Script" uid="uid://bacuyqjyjfuo7" path="res://core/components/Math/Equations/ExpressionHandler.gd" id="1_gvqed"]
+[ext_resource type="Script" uid="uid://cpnnadgp3ccya" path="res://core/components/Math/RandomEquationGen.gd" id="2_0d0ds"]
 
 [node name="MathTest" type="Node"]
 
 [node name="ExpressionHandler" type="Node" parent="."]
 script = ExtResource("1_gvqed")
-expression_string = "2 ^ 0.5"
+expression_string = "3.0 - 10.0 + 1.0 - 10.0 + 9.0 - 5.0"
+
+[node name="RandomEquationGen" type="Node" parent="."]
+script = ExtResource("2_0d0ds")
+max_operation_amount = 10
+min_operation_amount = 5
+integer_range = 1
+metadata/_custom_type_script = "uid://cpnnadgp3ccya"
