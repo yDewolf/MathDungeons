@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdxfvyjlv6okx"]
+[gd_scene load_steps=6 format=3 uid="uid://bdxfvyjlv6okx"]
 
 [ext_resource type="Script" uid="uid://8ow51t6eqy67" path="res://core/components/InputManager.gd" id="1_bo287"]
 [ext_resource type="Script" uid="uid://chxfjt08wd27v" path="res://core/components/StateMachine/StateMachine.gd" id="1_sbwep"]
 [ext_resource type="Script" uid="uid://nrh0llth2x5i" path="res://core/components/ActionController/ActionController.gd" id="3_4kk7v"]
+[ext_resource type="PackedScene" uid="uid://bi5x31q6i4bnu" path="res://core/components/CardWork/scenes/Card.tscn" id="4_4kk7v"]
+[ext_resource type="Script" uid="uid://d31k3vbq5t5u5" path="res://core/components/CardWork/ui/DeckUI.gd" id="4_23hbk"]
 
 [node name="TestPlayer" type="Node"]
 
@@ -18,3 +20,35 @@ metadata/_custom_type_script = "uid://chxfjt08wd27v"
 script = ExtResource("3_4kk7v")
 input_manager = NodePath("../InputManager")
 metadata/_custom_type_script = "uid://nrh0llth2x5i"
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardDeck" type="HBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -67.0
+offset_top = -64.0
+offset_right = 67.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+script = ExtResource("4_23hbk")
+
+[node name="Card" parent="UI/CardDeck" instance=ExtResource("4_4kk7v")]
+layout_mode = 2
+
+[node name="Card2" parent="UI/CardDeck" instance=ExtResource("4_4kk7v")]
+layout_mode = 2
+
+[node name="Card4" parent="UI/CardDeck" instance=ExtResource("4_4kk7v")]
+layout_mode = 2
