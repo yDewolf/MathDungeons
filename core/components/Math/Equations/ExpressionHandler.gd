@@ -35,7 +35,7 @@ func check_result() -> void:
 	var inputted = input_text.text
 	
 	var rounded_result: float = snapped(target_result.get_value(), precision)
-	var value: float = inputted.to_float()
+	var value: float = snapped(inputted.to_float(), precision)
 	warn_label.visible = true
 	var timer = get_tree().create_timer(1.2)
 	timer.timeout.connect(hide_warn_label)

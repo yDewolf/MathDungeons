@@ -17,7 +17,7 @@ class_name RandomEquationGen
 @export var integer_range: int = 10
 ## If the max digit is 2 (10), the max number will be 100 instead of 99
 @export var inclusive: bool = true
-@export var allow_negative: bool = true
+@export var negative_range: bool = true
 
 func _ready() -> void:
 	return
@@ -34,7 +34,7 @@ func _ready() -> void:
 
 
 func random_number() -> float:
-	return _random_number(integer_range, decimal_range, inclusive, allow_negative)
+	return _random_number(integer_range, decimal_range, inclusive, negative_range)
 
 static func _random_number(max_digits: int, decimal_digit_range: float, inclusive_range: bool, enable_negative: float) -> float:
 	var offset: int = 0
@@ -46,6 +46,9 @@ static func _random_number(max_digits: int, decimal_digit_range: float, inclusiv
 	if enable_negative:
 		min_number = -max_number
 	var number = randi_range(min_number, max_number)
+	if randi_range(0, 3) == 1:
+		number *= -1
+	
 	return float(number) * decimal_digit_range
 
 func generate_expression_string() -> String:
@@ -56,7 +59,7 @@ func generate_expression_string() -> String:
 		integer_range,
 		decimal_range,
 		inclusive,
-		allow_negative
+		negative_range
 	)
 
 ## Really bad way to generate expressions

@@ -15,7 +15,10 @@ input_text = NodePath("../UI/MarginContainer/VBoxContainer/TextEdit")
 
 [node name="RandomEquationGen" type="Node" parent="."]
 script = ExtResource("2_0d0ds")
+allowed_operations = Array[int]([1, 2, 3, 4])
+decimal_range = 0.1
 integer_range = 1
+negative_range = false
 metadata/_custom_type_script = "uid://cpnnadgp3ccya"
 
 [node name="UI" type="Control" parent="."]
