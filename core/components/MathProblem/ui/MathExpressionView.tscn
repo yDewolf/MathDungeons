@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbie345xd8nxa"]
+
+[ext_resource type="Script" uid="uid://bdheinu3v4svw" path="res://core/components/MathProblem/ui/MathExpressionView.gd" id="1_4534f"]
+
+[node name="MathExpressionView" type="RichTextLabel"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "Test"
+fit_content = true
+scroll_active = false
+script = ExtResource("1_4534f")

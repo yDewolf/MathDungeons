@@ -1,17 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8ow2nsxtjtj3"]
+[gd_scene load_steps=4 format=3 uid="uid://b8ow2nsxtjtj3"]
 
 [ext_resource type="Script" uid="uid://bacuyqjyjfuo7" path="res://core/components/Math/Equations/ExpressionHandler.gd" id="1_gvqed"]
+[ext_resource type="PackedScene" uid="uid://cbie345xd8nxa" path="res://core/components/MathProblem/ui/MathExpressionView.tscn" id="1_npv4y"]
 [ext_resource type="Script" uid="uid://cpnnadgp3ccya" path="res://core/components/Math/RandomEquationGen.gd" id="2_0d0ds"]
 
 [node name="MathTest" type="Node"]
 
-[node name="ExpressionHandler" type="Node" parent="."]
+[node name="ExpressionHandler" type="Node" parent="." node_paths=PackedStringArray("random_gen", "expression_view", "input_text")]
 script = ExtResource("1_gvqed")
-expression_string = "3.0 - 10.0 + 1.0 - 10.0 + 9.0 - 5.0"
+random_gen = NodePath("../RandomEquationGen")
+expression_view = NodePath("../UI/MarginContainer/VBoxContainer/MathExpressionView")
+input_text = NodePath("../UI/MarginContainer/VBoxContainer/TextEdit")
 
 [node name="RandomEquationGen" type="Node" parent="."]
 script = ExtResource("2_0d0ds")
-max_operation_amount = 10
-min_operation_amount = 5
 integer_range = 1
 metadata/_custom_type_script = "uid://cpnnadgp3ccya"
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MathExpressionView" parent="UI/MarginContainer/VBoxContainer" instance=ExtResource("1_npv4y")]
+layout_mode = 2
+
+[node name="TextEdit" type="TextEdit" parent="UI/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2

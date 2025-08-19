@@ -2,6 +2,7 @@ extends AlgebraVariable
 class_name MathExpression
 
 var expression_map: Array
+var stringified: String
 const OPERATION_FOLDER: String = "res://core/components/Math/Operations/"
 
 var priority: int = 0
@@ -121,6 +122,7 @@ static func create_from_string(expression_string: String) -> MathExpression:
 	
 	var new_expression: MathExpression = MathExpression.new()
 	new_expression.expression_map = new_expression_map
+	new_expression.stringified = expression_string
 	
 	return new_expression
 
@@ -186,16 +188,8 @@ static func parse_operation(operation_idx: int) -> MathOperation:
 	return operation
 
 static func parse_variable(charactere: String, variable_name: String = "") -> AlgebraVariable:
-	var value_modifier: int = 1
-	if charactere.begins_with("-"):
-		charactere.erase(0)
-		value_modifier = -1
-	
-	elif charactere.begins_with("+"):
-		charactere.erase(0)
-	
 	var value: float = charactere.to_float()
-	var variable: AlgebraVariable = AlgebraVariable.new(value * value_modifier)
+	var variable: AlgebraVariable = AlgebraVariable.new(value)
 	variable.name = variable_name
 	if not charactere.is_valid_float():
 		variable.type = AlgebraVariable.VariableTypes.UNSET

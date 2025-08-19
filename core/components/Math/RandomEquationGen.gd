@@ -20,7 +20,8 @@ class_name RandomEquationGen
 @export var allow_negative: bool = true
 
 func _ready() -> void:
-	#return
+	return
+
 	var start_time: int = Time.get_ticks_usec()
 
 	var expression_string: String = generate_expression_string()
