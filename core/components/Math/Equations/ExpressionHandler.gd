@@ -7,6 +7,7 @@ extends Node
 @export var expression_view: MathExpressionView
 var target_result: AlgebraVariable
 
+@export var warn_label: RichTextLabel
 @export var input_text: TextEdit
 @export var input_result: float
 
@@ -35,10 +36,18 @@ func check_result() -> void:
 	
 	var rounded_result: float = snapped(target_result.get_value(), precision)
 	var value: float = inputted.to_float()
+	warn_label.visible = true
+	var timer = get_tree().create_timer(1.2)
+	timer.timeout.connect(hide_warn_label)
+	
 	if rounded_result == value:
 		generateNewExpression()
-		print("Acertou!!")
+		warn_label.text = "[color=green]Acertou!!"
+		
 		input_text.text = ""
 		return
 	
-	print("Errou")
+	warn_label.text = "[color=red]Errou..."
+
+func hide_warn_label() -> void:
+	warn_label.visible = false
