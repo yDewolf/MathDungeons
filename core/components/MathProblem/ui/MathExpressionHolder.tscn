@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnvfl67tvkvm5"]
+
+[ext_resource type="PackedScene" uid="uid://cbie345xd8nxa" path="res://core/components/MathProblem/ui/MathExpressionView.tscn" id="1_fd8o1"]
+[ext_resource type="Script" uid="uid://dcxobfb8gd180" path="res://core/components/MathProblem/ui/MathExpressionHolder.gd" id="1_o80dg"]
+[ext_resource type="Theme" uid="uid://duopp3v3dn4fb" path="res://assets/themes/MainTheme.tres" id="2_o80dg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npv4y"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("expression_view")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_npv4y")
+script = ExtResource("1_o80dg")
+expression_view = NodePath("MarginContainer/MathExpressionView")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="MathExpressionView" parent="MarginContainer" instance=ExtResource("1_fd8o1")]
+layout_mode = 2
+theme = ExtResource("2_o80dg")
+theme_override_colors/default_color = Color(0, 0, 0, 1)

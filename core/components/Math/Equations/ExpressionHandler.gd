@@ -4,7 +4,9 @@ extends Node
 @export var random_gen: RandomEquationGen
 @export var precision: float = 0.1
 
-@export var expression_view: MathExpressionView
+@export var expression_vbox: VBoxContainer
+
+var expression_view: MathExpressionView
 var target_result: AlgebraVariable
 
 @export var warn_label: RichTextLabel
@@ -12,16 +14,22 @@ var target_result: AlgebraVariable
 @export var submit_button: Button
 @export var input_result: float
 
+@export_group("Packed Scenes")
+@export var expression_holder_scene: PackedScene
+
 func _ready() -> void:
 	submit_button.pressed.connect(check_result)
 	generateNewExpression()
 
 func generateNewExpression() -> void:
+	var expression_holder: MathExpressionHolder = expression_holder_scene.instantiate()
+	expression_view = expression_holder.expression_view
+	
 	var expression_string = random_gen.generate_expression_string()
 	var expression = MathExpression.create_from_string(expression_string)
-	
 	self.target_result = expression.solve()
 	
+	expression_vbox.add_child(expression_holder)
 	update_view(expression_string)
 
 func update_view(string: String):
@@ -42,6 +50,7 @@ func check_result() -> void:
 	timer.timeout.connect(hide_warn_label)
 	
 	if rounded_result == value:
+		expression_view.text += " = [color=purple]" + str(value)
 		generateNewExpression()
 		warn_label.text = "[color=green]Acertou!!"
 		

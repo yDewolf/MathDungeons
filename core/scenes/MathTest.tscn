@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8ow2nsxtjtj3"]
+[gd_scene load_steps=9 format=3 uid="uid://b8ow2nsxtjtj3"]
 
 [ext_resource type="Script" uid="uid://bacuyqjyjfuo7" path="res://core/components/Math/Equations/ExpressionHandler.gd" id="1_gvqed"]
 [ext_resource type="PackedScene" uid="uid://cbie345xd8nxa" path="res://core/components/MathProblem/ui/MathExpressionView.tscn" id="1_npv4y"]
 [ext_resource type="Script" uid="uid://cpnnadgp3ccya" path="res://core/components/Math/RandomEquationGen.gd" id="2_0d0ds"]
 [ext_resource type="Theme" uid="uid://duopp3v3dn4fb" path="res://assets/themes/MainTheme.tres" id="4_5i87k"]
+[ext_resource type="PackedScene" uid="uid://cnvfl67tvkvm5" path="res://core/components/MathProblem/ui/MathExpressionHolder.tscn" id="4_h0gn3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5i87k"]
 bg_color = Color(0.266665, 0.365565, 0.438179, 1)
@@ -15,18 +16,18 @@ bg_color = Color(1, 1, 1, 1)
 
 [node name="MathTest" type="Node"]
 
-[node name="ExpressionHandler" type="Node" parent="." node_paths=PackedStringArray("random_gen", "expression_view", "warn_label", "input_text", "submit_button")]
+[node name="ExpressionHandler" type="Node" parent="." node_paths=PackedStringArray("random_gen", "expression_vbox", "warn_label", "input_text", "submit_button")]
 script = ExtResource("1_gvqed")
 random_gen = NodePath("../RandomEquationGen")
-expression_view = NodePath("../UI/PanelContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer2/MathExpressionView")
+expression_vbox = NodePath("../UI/PanelContainer/VBoxContainer/ScrollContainer/ExpressionVBox")
 warn_label = NodePath("../UI/PanelContainer/Warning")
-input_text = NodePath("../UI/PanelContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer2/ResultSubmitter/TextEdit")
-submit_button = NodePath("../UI/PanelContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer2/ResultSubmitter/Button")
+input_text = NodePath("../UI/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer/ResultSubmitter/TextEdit")
+submit_button = NodePath("../UI/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer/ResultSubmitter/Button")
+expression_holder_scene = ExtResource("4_h0gn3")
 
 [node name="RandomEquationGen" type="Node" parent="."]
 script = ExtResource("2_0d0ds")
 allowed_operations = Array[int]([1, 2, 3, 4])
-decimal_range = 0.1
 integer_range = 1
 negative_range = false
 metadata/_custom_type_script = "uid://cpnnadgp3ccya"
@@ -49,50 +50,46 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer"]
 layout_mode = 2
+alignment = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 theme = ExtResource("4_5i87k")
 theme_override_styles/panel = SubResource("StyleBoxFlat_5i87k")
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/ScrollContainer"]
+[node name="ExpressionVBox" type="VBoxContainer" parent="UI/PanelContainer/VBoxContainer/ScrollContainer"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI/PanelContainer/ScrollContainer/VBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_npv4y")
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/ScrollContainer/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/VBoxContainer/PanelContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="UI/PanelContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer"]
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="MathExpressionView" parent="UI/PanelContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer2" instance=ExtResource("1_npv4y")]
-layout_mode = 2
-theme = ExtResource("4_5i87k")
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-
-[node name="ResultSubmitter" type="HBoxContainer" parent="UI/PanelContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer2"]
+[node name="ResultSubmitter" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer"]
 layout_mode = 2
 
-[node name="TextEdit" type="TextEdit" parent="UI/PanelContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer2/ResultSubmitter"]
+[node name="TextEdit" type="TextEdit" parent="UI/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer/ResultSubmitter"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 28
 placeholder_text = "Type the result here"
 
-[node name="Button" type="Button" parent="UI/PanelContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer2/ResultSubmitter"]
+[node name="Button" type="Button" parent="UI/PanelContainer/VBoxContainer/PanelContainer2/MarginContainer/ResultSubmitter"]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -100,6 +97,7 @@ text = "Submit"
 icon = SubResource("ViewportTexture_5i87k")
 
 [node name="Warning" parent="UI/PanelContainer" instance=ExtResource("1_npv4y")]
+visible = false
 layout_mode = 2
 size_flags_vertical = 4
 text = "Acertou!!"
