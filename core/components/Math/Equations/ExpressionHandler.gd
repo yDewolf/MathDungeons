@@ -10,7 +10,7 @@ var expression_view: MathExpressionView
 var target_result: AlgebraVariable
 
 @export var warn_label: RichTextLabel
-@export var input_text: TextEdit
+@export var input_text: LineEdit
 @export var submit_button: Button
 @export var input_result: float
 
@@ -18,7 +18,8 @@ var target_result: AlgebraVariable
 @export var expression_holder_scene: PackedScene
 
 func _ready() -> void:
-	submit_button.pressed.connect(check_result)
+	input_text.text_submitted.connect(check_result)
+	submit_button.pressed.connect(submit_result)
 	generateNewExpression()
 
 func generateNewExpression() -> void:
@@ -36,18 +37,23 @@ func update_view(string: String):
 	expression_view.show_expression(string)
 	print(self.target_result.get_value())
 
+func submit_result() -> void:
+	self.check_result(input_text.text)
 
-func check_result() -> void:
-	if input_text.text == "":
+func check_result(text: String) -> void:
+	if text == "":
 		return
 	
-	var inputted = input_text.text
+	var inputted = text
 	
 	var rounded_result: float = snapped(target_result.get_value(), precision)
 	var value: float = snapped(inputted.to_float(), precision)
 	warn_label.visible = true
 	var timer = get_tree().create_timer(1.2)
 	timer.timeout.connect(hide_warn_label)
+	
+	if inputted.to_lower() == "inf":
+		rounded_result = INF
 	
 	if rounded_result == value:
 		expression_view.text += " = [color=purple]" + str(value)

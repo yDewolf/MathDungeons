@@ -10,8 +10,11 @@ bg_color = Color(1, 1, 1, 1)
 [node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("expression_view")]
 anchors_preset = 10
 anchor_right = 1.0
+offset_right = -369.0
 offset_bottom = 64.0
 grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_npv4y")
 script = ExtResource("1_o80dg")
 expression_view = NodePath("MarginContainer/MathExpressionView")
