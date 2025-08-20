@@ -9,10 +9,11 @@ var target_result: AlgebraVariable
 
 @export var warn_label: RichTextLabel
 @export var input_text: TextEdit
+@export var submit_button: Button
 @export var input_result: float
 
 func _ready() -> void:
-	input_text.text_changed.connect(check_result)
+	submit_button.pressed.connect(check_result)
 	generateNewExpression()
 
 func generateNewExpression() -> void:
