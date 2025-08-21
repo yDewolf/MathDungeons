@@ -1,0 +1,150 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyl0664juyqfg"]
+
+[ext_resource type="Script" uid="uid://bf8ivdsjwmqc7" path="res://core/components/MathProblem/ui/VirtualNumpad.gd" id="1_ivxt4"]
+
+[node name="VirtualNumpad" type="MarginContainer" node_paths=PackedStringArray("number_grid", "action_column", "preview_label")]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -273.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+script = ExtResource("1_ivxt4")
+number_grid = NodePath("VBoxContainer/HBoxContainer/NumberGrid")
+action_column = NodePath("VBoxContainer/HBoxContainer/ActionColumn")
+preview_label = NodePath("VBoxContainer/PanelContainer/HBoxContainer/Preview")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+texture_filter = 4
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Preview" type="RichTextLabel" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NumberGrid" type="GridContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+
+[node name="7" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "7"
+
+[node name="8" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "8"
+
+[node name="9" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "9"
+
+[node name="4" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "4"
+
+[node name="5" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "5"
+
+[node name="6" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "6"
+
+[node name="1" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "1"
+
+[node name="2" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "2"
+
+[node name="3" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "3"
+
+[node name="minus" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "-/+"
+
+[node name="0" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "0"
+
+[node name="dot" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "."
+
+[node name="ActionColumn" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Backspace" type="Button" parent="VBoxContainer/HBoxContainer/ActionColumn"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "<--"
+
+[node name="Clear" type="Button" parent="VBoxContainer/HBoxContainer/ActionColumn"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "C"
+
+[node name="Inf" type="Button" parent="VBoxContainer/HBoxContainer/ActionColumn"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Inf"
+
+[node name="Equals" type="Button" parent="VBoxContainer/HBoxContainer/ActionColumn"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "="
