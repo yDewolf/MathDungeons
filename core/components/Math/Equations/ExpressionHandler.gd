@@ -52,10 +52,10 @@ func check_result(text: String) -> void:
 	var timer = get_tree().create_timer(1.2)
 	timer.timeout.connect(hide_warn_label)
 	
-	if inputted.to_lower() == "inf":
-		rounded_result = INF
+	if inputted.to_lower() == "inf" and rounded_result == INF:
+		value = rounded_result
 	
-	if rounded_result == value:
+	if value == rounded_result:
 		expression_view.text += " = [color=purple]" + str(value)
 		generateNewExpression()
 		warn_label.text = "[color=green]Acertou!!"

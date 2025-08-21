@@ -59,6 +59,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("4_5i87k")
 theme_override_styles/panel = SubResource("StyleBoxFlat_5i87k")
+follow_focus = true
 horizontal_scroll_mode = 0
 
 [node name="ExpressionVBox" type="VBoxContainer" parent="UI/PanelContainer/VBoxContainer/ScrollContainer"]
