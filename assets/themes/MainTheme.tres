@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://duopp3v3dn4fb"]
 
-[ext_resource type="FontFile" uid="uid://16tmjp2uvoa0" path="res://assets/fonts/Daydream DEMO.otf" id="1_bfh01"]
+[ext_resource type="FontFile" uid="uid://bm6vrfibrxy0x" path="res://assets/fonts/Pixel Font.ttf" id="1_bfh01"]
 
 [resource]
 default_font = ExtResource("1_bfh01")
