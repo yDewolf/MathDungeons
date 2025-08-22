@@ -3,17 +3,18 @@
 [ext_resource type="Script" uid="uid://bf8ivdsjwmqc7" path="res://core/components/MathProblem/ui/VirtualNumpad.gd" id="1_ivxt4"]
 
 [node name="VirtualNumpad" type="MarginContainer" node_paths=PackedStringArray("number_grid", "action_column", "preview_label")]
+custom_minimum_size = Vector2(0, 330)
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -273.0
+offset_top = -260.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_left = 15
+theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 70
 script = ExtResource("1_ivxt4")
 number_grid = NodePath("VBoxContainer/HBoxContainer/NumberGrid")
 action_column = NodePath("VBoxContainer/HBoxContainer/ActionColumn")
@@ -30,6 +31,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Preview" type="RichTextLabel" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+texture_filter = 1
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -43,6 +45,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="NumberGrid" type="GridContainer" parent="VBoxContainer/HBoxContainer"]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 3

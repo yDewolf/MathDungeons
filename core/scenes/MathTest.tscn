@@ -62,7 +62,6 @@ theme = ExtResource("4_5i87k")
 theme_override_styles/panel = SubResource("StyleBoxFlat_5i87k")
 follow_focus = true
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
 
 [node name="ExpressionVBox" type="VBoxContainer" parent="UI/PanelContainer/VBoxContainer/ScrollContainer"]
 custom_minimum_size = Vector2(400, 0)
@@ -77,6 +76,7 @@ size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_npv4y")
 
 [node name="VirtualNumpad" parent="UI/PanelContainer/VBoxContainer/PanelContainer2" instance=ExtResource("5_radsl")]
+texture_filter = 1
 layout_mode = 2
 
 [node name="Warning" parent="UI/PanelContainer" instance=ExtResource("1_npv4y")]
