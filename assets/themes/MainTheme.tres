@@ -1,7 +1,24 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://duopp3v3dn4fb"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://duopp3v3dn4fb"]
 
 [ext_resource type="FontFile" uid="uid://bm6vrfibrxy0x" path="res://assets/fonts/Pixel Font.ttf" id="1_bfh01"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfh01"]
+bg_color = Color(0.361815, 0.441871, 0.517526, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6bq8"]
+bg_color = Color(0.242069, 0.30386, 0.362122, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4xafc"]
+bg_color = Color(0.176559, 0.225845, 0.272285, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8nhri"]
+bg_color = Color(0.173831, 0.197309, 0.223903, 1)
 
 [resource]
 default_font = ExtResource("1_bfh01")
 default_font_size = 18
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/styles/hover = SubResource("StyleBoxFlat_bfh01")
+Button/styles/normal = SubResource("StyleBoxFlat_l6bq8")
+Button/styles/pressed = SubResource("StyleBoxFlat_4xafc")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_8nhri")

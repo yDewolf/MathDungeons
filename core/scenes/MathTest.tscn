@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b8ow2nsxtjtj3"]
+[gd_scene load_steps=8 format=3 uid="uid://b8ow2nsxtjtj3"]
 
 [ext_resource type="Script" uid="uid://bacuyqjyjfuo7" path="res://core/components/Math/Equations/ExpressionHandler.gd" id="1_gvqed"]
 [ext_resource type="PackedScene" uid="uid://cbie345xd8nxa" path="res://core/components/MathProblem/ui/MathExpressionView.tscn" id="1_npv4y"]
@@ -6,9 +6,6 @@
 [ext_resource type="Theme" uid="uid://duopp3v3dn4fb" path="res://assets/themes/MainTheme.tres" id="4_5i87k"]
 [ext_resource type="PackedScene" uid="uid://cnvfl67tvkvm5" path="res://core/components/MathProblem/ui/MathExpressionHolder.tscn" id="4_h0gn3"]
 [ext_resource type="PackedScene" uid="uid://dyl0664juyqfg" path="res://core/components/MathProblem/ui/VirtualNumpad.tscn" id="5_radsl"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5i87k"]
-bg_color = Color(0.266665, 0.365565, 0.438179, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npv4y"]
 bg_color = Color(1, 1, 1, 1)
@@ -20,7 +17,7 @@ script = ExtResource("1_gvqed")
 random_gen = NodePath("../RandomEquationGen")
 expression_vbox = NodePath("../UI/PanelContainer/VBoxContainer/ScrollContainer/ExpressionVBox")
 scroll_container = NodePath("../UI/PanelContainer/VBoxContainer/ScrollContainer")
-warn_label = NodePath("../UI/PanelContainer/Warning")
+warn_label = NodePath("../UI/PanelContainer/MarginContainer/Warning")
 virtual_numpad = NodePath("../UI/PanelContainer/VBoxContainer/PanelContainer2/VirtualNumpad")
 expression_holder_scene = ExtResource("4_h0gn3")
 
@@ -48,10 +45,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 alignment = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/PanelContainer/VBoxContainer"]
@@ -59,9 +56,9 @@ custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("4_5i87k")
-theme_override_styles/panel = SubResource("StyleBoxFlat_5i87k")
 follow_focus = true
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
 
 [node name="ExpressionVBox" type="VBoxContainer" parent="UI/PanelContainer/VBoxContainer/ScrollContainer"]
 custom_minimum_size = Vector2(400, 0)
@@ -79,10 +76,15 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_npv4y")
 texture_filter = 1
 layout_mode = 2
 
-[node name="Warning" parent="UI/PanelContainer" instance=ExtResource("1_npv4y")]
-visible = false
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
 layout_mode = 2
-size_flags_vertical = 4
+size_flags_vertical = 0
+theme_override_constants/margin_top = 50
+
+[node name="Warning" parent="UI/PanelContainer/MarginContainer" instance=ExtResource("1_npv4y")]
+custom_minimum_size = Vector2(0, 32.89)
+layout_mode = 2
 text = "Acertou!!"
 horizontal_alignment = 1
+vertical_alignment = 1
 script = null

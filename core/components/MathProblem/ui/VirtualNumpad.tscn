@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dyl0664juyqfg"]
+[gd_scene load_steps=3 format=3 uid="uid://dyl0664juyqfg"]
 
+[ext_resource type="Theme" uid="uid://duopp3v3dn4fb" path="res://assets/themes/MainTheme.tres" id="1_60swe"]
 [ext_resource type="Script" uid="uid://bf8ivdsjwmqc7" path="res://core/components/MathProblem/ui/VirtualNumpad.gd" id="1_ivxt4"]
 
 [node name="VirtualNumpad" type="MarginContainer" node_paths=PackedStringArray("number_grid", "action_column", "preview_label")]
@@ -11,6 +12,7 @@ anchor_bottom = 1.0
 offset_top = -260.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("1_60swe")
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 50
@@ -129,7 +131,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 
 [node name="Backspace" type="Button" parent="VBoxContainer/HBoxContainer/ActionColumn"]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(60, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "<--"

@@ -38,8 +38,8 @@ func update_view(string: String):
 	print(self.target_result.get_value())
 
 func check_result(inputted_value: float) -> void:
-	var rounded_result: float = snapped(target_result.get_value(), precision)
-	var value: float = snapped(inputted_value, precision)
+	var rounded_result: float = snapped(floorf(target_result.get_value() / precision) * precision, precision)
+	var value: float = snapped(floorf(inputted_value / precision) * precision, precision)
 	warn_label.visible = true
 	var timer = get_tree().create_timer(1.2)
 	timer.timeout.connect(hide_warn_label)
