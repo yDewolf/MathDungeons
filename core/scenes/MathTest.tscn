@@ -82,6 +82,7 @@ size_flags_vertical = 0
 theme_override_constants/margin_top = 50
 
 [node name="Warning" parent="UI/PanelContainer/MarginContainer" instance=ExtResource("1_npv4y")]
+visible = false
 custom_minimum_size = Vector2(0, 32.89)
 layout_mode = 2
 text = "Acertou!!"
