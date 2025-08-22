@@ -1,0 +1,62 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://bfqj2vwf5wtg4"]
+
+[ext_resource type="FontFile" uid="uid://bm6vrfibrxy0x" path="res://assets/fonts/Pixel Font.ttf" id="1_mnn8v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mnn8v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mnn8v"]
+bg_color = Color(0.365324, 0.445783, 0.521825, 1)
+border_width_left = 3
+border_width_right = 3
+border_width_bottom = 8
+border_color = Color(0.1943, 0.24215, 0.29, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6bq8"]
+bg_color = Color(0.242069, 0.30386, 0.362122, 1)
+border_width_left = 3
+border_width_right = 3
+border_width_bottom = 8
+border_color = Color(0.1943, 0.24215, 0.29, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f0nlk"]
+bg_color = Color(0.203095, 0.254801, 0.306487, 1)
+border_color = Color(0.1943, 0.24215, 0.29, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8nhri"]
+bg_color = Color(0.155296, 0.206442, 0.202382, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.134295, 0.180061, 0.176543, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+anti_aliasing = false
+
+[resource]
+default_font = ExtResource("1_mnn8v")
+default_font_size = 18
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/styles/focus = SubResource("StyleBoxEmpty_mnn8v")
+Button/styles/hover = SubResource("StyleBoxFlat_mnn8v")
+Button/styles/normal = SubResource("StyleBoxFlat_l6bq8")
+Button/styles/pressed = SubResource("StyleBoxFlat_f0nlk")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_8nhri")

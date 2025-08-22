@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dyl0664juyqfg"]
 
-[ext_resource type="Theme" uid="uid://duopp3v3dn4fb" path="res://assets/themes/MainTheme.tres" id="1_60swe"]
+[ext_resource type="Theme" uid="uid://bfqj2vwf5wtg4" path="res://assets/themes/NumpadTheme.tres" id="1_60swe"]
 [ext_resource type="Script" uid="uid://bf8ivdsjwmqc7" path="res://core/components/MathProblem/ui/VirtualNumpad.gd" id="1_ivxt4"]
 
 [node name="VirtualNumpad" type="MarginContainer" node_paths=PackedStringArray("number_grid", "action_column", "preview_label")]
@@ -38,6 +38,7 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
+text = "0123456789.00"
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
