@@ -17,6 +17,7 @@ enum ButtonTypes {
 signal pressed_button(button)
 
 func _ready() -> void:
+	self.focus_mode = Control.FOCUS_NONE
 	if self.type == ButtonTypes.VALUE and self.value == -1:
 		self.value = self.name.to_int()
 	
