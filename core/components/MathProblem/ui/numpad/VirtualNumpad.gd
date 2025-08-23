@@ -105,7 +105,7 @@ func parse_button_pressed(type: NumpadButton.ButtonTypes, value: int = 0) -> voi
 		return
 	
 	if type == NumpadButton.ButtonTypes.CLEAR:
-		self.number_string = ""
+		self.clear_value()
 		return
 	
 	if type == NumpadButton.ButtonTypes.EQUALS:

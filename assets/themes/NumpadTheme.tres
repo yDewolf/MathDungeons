@@ -1,6 +1,17 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://bfqj2vwf5wtg4"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://bfqj2vwf5wtg4"]
 
 [ext_resource type="FontFile" uid="uid://bm6vrfibrxy0x" path="res://assets/fonts/Pixel Font.ttf" id="1_mnn8v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_50vhm"]
+bg_color = Color(0.145098, 0.184314, 0.227451, 1)
+border_width_left = 4
+border_width_right = 4
+border_color = Color(0.145098, 0.184314, 0.227451, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mnn8v"]
 
@@ -55,6 +66,7 @@ anti_aliasing = false
 default_font = ExtResource("1_mnn8v")
 default_font_size = 18
 Button/colors/font_color = Color(1, 1, 1, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_50vhm")
 Button/styles/focus = SubResource("StyleBoxEmpty_mnn8v")
 Button/styles/hover = SubResource("StyleBoxFlat_mnn8v")
 Button/styles/normal = SubResource("StyleBoxFlat_l6bq8")

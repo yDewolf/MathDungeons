@@ -41,7 +41,6 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "0123456789.00"
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1

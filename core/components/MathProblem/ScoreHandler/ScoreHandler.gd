@@ -63,15 +63,15 @@ func update_score_multiplier(expression: MathExpression) -> void:
 func update_score(correct_answer: bool = false):
 	if correct_answer:
 		combo += 1
-		self.current_score += expression_value * self.score_multiplier
+		self.current_score += round(expression_value * self.score_multiplier)
 		return
 	
 	combo = 0
-	self.current_score += expression_value * self.score_multiplier * -1
+	self.current_score += round(expression_value * self.score_multiplier * -1)
 
 
 func update_view(score: int):
-	self.score_view.text = "Score: " + str(self.current_score) + ""
+	self.score_view.text = "Score: " + str(score) + ""
 	
 	var combo_effects = ""
 	var effects_close = ""

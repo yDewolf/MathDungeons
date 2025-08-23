@@ -55,7 +55,7 @@ func is_solveable() -> bool:
 	return true
 
 ## Should be overrided
-func solve_values(values: Array[AlgebraVariable]) -> AlgebraVariable:
+func solve_values(_values: Array[AlgebraVariable]) -> AlgebraVariable:
 	return AlgebraVariable.new()
 
 

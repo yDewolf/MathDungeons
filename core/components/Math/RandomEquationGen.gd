@@ -20,16 +20,16 @@ class_name RandomEquationGen
 @export var negative_range: bool = true
 
 func _ready() -> void:
-	return
+	pass
 
-	var start_time: int = Time.get_ticks_usec()
-
-	var expression_string: String = generate_expression_string()
-	var expression: MathExpression = MathExpression.create_from_string(expression_string)
-	print(expression_string)
-	print("= ", expression.solve().get_value())
+	#var start_time: int = Time.get_ticks_usec()
 	
-	print_rich("[color=orange]DEBUG: [color=white]TOOK [color=cyan]", Time.get_ticks_usec() - start_time, "us[color=white] to solve a equation")
+	#var expression_string: String = generate_expression_string()
+	#var expression: MathExpression = MathExpression.create_from_string(expression_string)
+	#print(expression_string)
+	#print("= ", expression.solve().get_value())
+	
+	#print_rich("[color=orange]DEBUG: [color=white]TOOK [color=cyan]", Time.get_ticks_usec() - start_time, "us[color=white] to solve a equation")
 
 
 
@@ -41,7 +41,7 @@ static func _random_number(max_digits: int, decimal_digit_range: float, inclusiv
 	if not inclusive_range:
 		offset = -1
 	
-	var max_number: int = 10 * (max_digits / decimal_digit_range) + offset
+	var max_number: int = 10 * floor(max_digits / decimal_digit_range) + offset
 	var min_number = 0
 	if enable_negative:
 		min_number = -max_number

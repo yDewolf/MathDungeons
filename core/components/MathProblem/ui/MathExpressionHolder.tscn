@@ -6,6 +6,16 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npv4y"]
 bg_color = Color(0.110974, 0.163335, 0.159247, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.213963, 0.301153, 0.29489, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+anti_aliasing = false
 
 [node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("expression_view")]
 texture_filter = 1

@@ -31,7 +31,7 @@ func solve() -> AlgebraVariable:
 		if sub_expressions.is_empty():
 			break
 		
-		last_result = solve_next_sub_expression(sub_expressions, current_map)
+		last_result = solve_next_sub_expression(sub_expressions)
 		if last_result == null:
 			continue
 	
@@ -39,7 +39,7 @@ func solve() -> AlgebraVariable:
 	
 	return last_result
 
-func solve_next_sub_expression(expressions: Array[MathExpression], current_map: Array) -> AlgebraVariable:
+func solve_next_sub_expression(expressions: Array[MathExpression]) -> AlgebraVariable:
 	if expressions.is_empty():
 		return
 	
@@ -48,9 +48,6 @@ func solve_next_sub_expression(expressions: Array[MathExpression], current_map: 
 	
 	## Solve the operation with highest priority
 	var result = target_expression.solve()
-	#var idx: int = current_map.find(target_expression)
-	#current_map.remove_at(idx)
-	#current_map.insert(idx, result)
 	
 	return result
 
@@ -207,8 +204,8 @@ static func parse_operation(operation_idx: int) -> MathOperation:
 	return operation
 
 static func parse_variable(charactere: String, variable_name: String = "") -> AlgebraVariable:
-	var value: float = charactere.to_float()
-	var variable: AlgebraVariable = AlgebraVariable.new(value)
+	var value_: float = charactere.to_float()
+	var variable: AlgebraVariable = AlgebraVariable.new(value_)
 	variable.name = variable_name
 	if not charactere.is_valid_float():
 		variable.type = AlgebraVariable.VariableTypes.UNSET
