@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyl0664juyqfg"]
+[gd_scene load_steps=5 format=3 uid="uid://dyl0664juyqfg"]
 
 [ext_resource type="Theme" uid="uid://bfqj2vwf5wtg4" path="res://assets/themes/NumpadTheme.tres" id="1_60swe"]
-[ext_resource type="Script" uid="uid://bf8ivdsjwmqc7" path="res://core/components/MathProblem/ui/VirtualNumpad.gd" id="1_ivxt4"]
+[ext_resource type="Script" uid="uid://bf8ivdsjwmqc7" path="res://core/components/MathProblem/ui/numpad/VirtualNumpad.gd" id="1_ivxt4"]
+[ext_resource type="Script" uid="uid://x3tntnkahsqy" path="res://core/components/MathProblem/ui/numpad/NumpadButton.gd" id="3_pwqbd"]
+[ext_resource type="Script" uid="uid://8ow51t6eqy67" path="res://core/components/InputManager.gd" id="4_h46ba"]
 
-[node name="VirtualNumpad" type="MarginContainer" node_paths=PackedStringArray("number_grid", "action_column", "preview_label")]
+[node name="VirtualNumpad" type="MarginContainer" node_paths=PackedStringArray("input_manager", "number_grid", "action_column", "preview_label")]
 custom_minimum_size = Vector2(0, 330)
 anchors_preset = 12
 anchor_top = 1.0
@@ -18,6 +20,7 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 70
 script = ExtResource("1_ivxt4")
+input_manager = NodePath("InputManager")
 number_grid = NodePath("VBoxContainer/HBoxContainer/NumberGrid")
 action_column = NodePath("VBoxContainer/HBoxContainer/ActionColumn")
 preview_label = NodePath("VBoxContainer/PanelContainer/HBoxContainer/Preview")
@@ -58,72 +61,86 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "7"
+script = ExtResource("3_pwqbd")
 
 [node name="8" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "8"
+script = ExtResource("3_pwqbd")
 
 [node name="9" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "9"
+script = ExtResource("3_pwqbd")
 
 [node name="4" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "4"
+script = ExtResource("3_pwqbd")
 
 [node name="5" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "5"
+script = ExtResource("3_pwqbd")
 
 [node name="6" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "6"
+script = ExtResource("3_pwqbd")
 
 [node name="1" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "1"
+script = ExtResource("3_pwqbd")
 
 [node name="2" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "2"
+script = ExtResource("3_pwqbd")
 
 [node name="3" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "3"
+script = ExtResource("3_pwqbd")
 
 [node name="minus" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "-/+"
+script = ExtResource("3_pwqbd")
+type = 6
 
 [node name="0" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "0"
+script = ExtResource("3_pwqbd")
 
 [node name="dot" type="Button" parent="VBoxContainer/HBoxContainer/NumberGrid"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "."
+script = ExtResource("3_pwqbd")
+type = 5
 
 [node name="ActionColumn" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 texture_filter = 1
@@ -136,21 +153,34 @@ custom_minimum_size = Vector2(60, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "<--"
+script = ExtResource("3_pwqbd")
+type = 2
 
 [node name="Clear" type="Button" parent="VBoxContainer/HBoxContainer/ActionColumn"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "C"
+script = ExtResource("3_pwqbd")
+type = 3
 
 [node name="Inf" type="Button" parent="VBoxContainer/HBoxContainer/ActionColumn"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Inf"
+script = ExtResource("3_pwqbd")
+type = 1
 
 [node name="Equals" type="Button" parent="VBoxContainer/HBoxContainer/ActionColumn"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "="
+script = ExtResource("3_pwqbd")
+type = 4
+
+[node name="InputManager" type="Node" parent="."]
+script = ExtResource("4_h46ba")
+_process_just_pressed = Array[String](["show_cursor", "backspace", "clear", "infinite_value", "negative_number", "decimal_separator", "equals"])
+metadata/_custom_type_script = "uid://8ow51t6eqy67"

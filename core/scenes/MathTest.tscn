@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cpnnadgp3ccya" path="res://core/components/Math/RandomEquationGen.gd" id="2_0d0ds"]
 [ext_resource type="PackedScene" uid="uid://cnvfl67tvkvm5" path="res://core/components/MathProblem/ui/MathExpressionHolder.tscn" id="4_h0gn3"]
 [ext_resource type="Theme" uid="uid://bfqj2vwf5wtg4" path="res://assets/themes/NumpadTheme.tres" id="4_radsl"]
-[ext_resource type="PackedScene" uid="uid://dyl0664juyqfg" path="res://core/components/MathProblem/ui/VirtualNumpad.tscn" id="5_radsl"]
+[ext_resource type="PackedScene" uid="uid://dyl0664juyqfg" path="res://core/components/MathProblem/ui/numpad/VirtualNumpad.tscn" id="5_radsl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npv4y"]
 bg_color = Color(1, 1, 1, 1)

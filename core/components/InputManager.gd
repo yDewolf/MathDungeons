@@ -32,8 +32,12 @@ signal changed_cursor_visible()
 func _register_signals(inputs, type):
 	for input in inputs:
 		if input != "":
-			if !has_user_signal(input):
-				add_user_signal(input+str(type))
+			_register_signal(input, type)
+
+func _register_signal(input, type: ActionTypes):
+	if !has_user_signal(input):
+		add_user_signal(input+str(type))
+
 
 func connect_signal(action: String, type: ActionTypes, callable: Callable):
 	connect(action+str(type), callable)
