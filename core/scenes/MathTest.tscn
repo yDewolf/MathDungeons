@@ -5,20 +5,17 @@
 [ext_resource type="Script" uid="uid://cpnnadgp3ccya" path="res://core/components/Math/RandomEquationGen.gd" id="2_0d0ds"]
 [ext_resource type="PackedScene" uid="uid://cnvfl67tvkvm5" path="res://core/components/MathProblem/ui/MathExpressionHolder.tscn" id="4_h0gn3"]
 [ext_resource type="Theme" uid="uid://bfqj2vwf5wtg4" path="res://assets/themes/NumpadTheme.tres" id="4_radsl"]
+[ext_resource type="Script" uid="uid://x3tntnkahsqy" path="res://core/components/MathProblem/ui/numpad/NumpadButton.gd" id="5_5xw58"]
 [ext_resource type="PackedScene" uid="uid://dyl0664juyqfg" path="res://core/components/MathProblem/ui/numpad/VirtualNumpad.tscn" id="5_radsl"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npv4y"]
-bg_color = Color(1, 1, 1, 1)
 
 [node name="MathTest" type="Node"]
 
-[node name="ExpressionHandler" type="Node" parent="." node_paths=PackedStringArray("random_gen", "expression_vbox", "scroll_container", "warn_label", "virtual_numpad")]
+[node name="ExpressionHandler" type="Node" parent="." node_paths=PackedStringArray("random_gen", "view_holder", "warn_label", "virtual_numpad")]
 script = ExtResource("1_gvqed")
 random_gen = NodePath("../RandomEquationGen")
-expression_vbox = NodePath("../UI/PanelContainer/VBoxContainer/ScrollContainer/ExpressionVBox")
-scroll_container = NodePath("../UI/PanelContainer/VBoxContainer/ScrollContainer")
-warn_label = NodePath("../UI/PanelContainer/MarginContainer/Warning")
-virtual_numpad = NodePath("../UI/PanelContainer/VBoxContainer/PanelContainer2/VirtualNumpad")
+view_holder = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/PanelContainer")
+warn_label = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/PanelContainer/Warning")
+virtual_numpad = NodePath("../UI/PanelContainer/VBoxContainer/VirtualNumpad")
 expression_holder_scene = ExtResource("4_h0gn3")
 
 [node name="RandomEquationGen" type="Node" parent="."]
@@ -48,40 +45,20 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-alignment = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 64)
+[node name="MarginContainer2" type="MarginContainer" parent="UI/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("4_radsl")
-follow_focus = true
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 20
 
-[node name="ExpressionVBox" type="VBoxContainer" parent="UI/PanelContainer/VBoxContainer/ScrollContainer"]
-custom_minimum_size = Vector2(400, 0)
+[node name="PanelContainer" parent="UI/PanelContainer/VBoxContainer/MarginContainer2" instance=ExtResource("4_h0gn3")]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
-alignment = 2
 
-[node name="PanelContainer2" type="PanelContainer" parent="UI/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-theme_override_styles/panel = SubResource("StyleBoxFlat_npv4y")
-
-[node name="VirtualNumpad" parent="UI/PanelContainer/VBoxContainer/PanelContainer2" instance=ExtResource("5_radsl")]
-texture_filter = 1
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_constants/margin_top = 50
-
-[node name="Warning" parent="UI/PanelContainer/MarginContainer" instance=ExtResource("1_npv4y")]
+[node name="Warning" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/PanelContainer" instance=ExtResource("1_npv4y")]
 visible = false
 custom_minimum_size = Vector2(0, 32.89)
 layout_mode = 2
@@ -89,3 +66,50 @@ text = "Acertou!!"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = null
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="MenuHBox" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+alignment = 1
+
+[node name="MenuHBox2" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer/MarginContainer/MenuHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="UI/PanelContainer/VBoxContainer/MarginContainer/MenuHBox/MenuHBox2"]
+layout_mode = 2
+text = "History"
+
+[node name="Clear" type="Button" parent="UI/PanelContainer/VBoxContainer/MarginContainer/MenuHBox"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "C"
+script = ExtResource("5_5xw58")
+type = 3
+metadata/_custom_type_script = "uid://x3tntnkahsqy"
+
+[node name="Backspace" type="Button" parent="UI/PanelContainer/VBoxContainer/MarginContainer/MenuHBox"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "<--"
+script = ExtResource("5_5xw58")
+type = 2
+metadata/_custom_type_script = "uid://x3tntnkahsqy"
+
+[node name="VirtualNumpad" parent="UI/PanelContainer/VBoxContainer" node_paths=PackedStringArray("external_buttons") instance=ExtResource("5_radsl")]
+texture_filter = 1
+layout_mode = 2
+external_buttons = [NodePath("../MarginContainer/MenuHBox/Backspace")]
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = 50

@@ -25,6 +25,7 @@ signal send_result(value)
 
 func _ready() -> void:
 	for input_number in NUMBER_INPUTS:
+		self.input_manager._process_just_pressed.append(input_number)
 		self.input_manager._register_signal(input_number, InputManager.ActionTypes.PROCESS_JUST_PRESSED)
 		self.input_manager.connect_signal(
 			input_number, 
@@ -39,7 +40,7 @@ func _ready() -> void:
 		self.input_manager.connect_signal(
 			str(input_name).to_lower(),
 			InputManager.ActionTypes.PROCESS_JUST_PRESSED,
-			self.parse_button_pressed.bind(input_name)
+			self.parse_button_pressed.bind(NumpadButton.ButtonTypes.get(input_name))
 		)
 	
 	var all_buttons: Array[NumpadButton] = self._get_child_buttons(self)
@@ -66,8 +67,11 @@ func _get_child_buttons(parent: Node = self) -> Array[NumpadButton]:
 func update_preview_text():
 	preview_label.text = number_string
 
+func clear_value():
+	self.number_string = ""
 
-func parse_button_pressed(type: NumpadButton.ButtonTypes, value: int) -> void:
+
+func parse_button_pressed(type: NumpadButton.ButtonTypes, value: int = 0) -> void:
 	if type == NumpadButton.ButtonTypes.VALUE:
 		number_string += str(value)
 		return
@@ -94,6 +98,9 @@ func parse_button_pressed(type: NumpadButton.ButtonTypes, value: int) -> void:
 		return
 	
 	if type == NumpadButton.ButtonTypes.BACKSPACE:
+		if self.number_string.is_empty():
+			return
+		
 		self.number_string = self.number_string.erase(len(self.number_string) - 1)
 		return
 	

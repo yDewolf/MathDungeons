@@ -4,9 +4,11 @@ extends Node
 @export var random_gen: RandomEquationGen
 @export var precision: float = 0.1
 
-@export var expression_vbox: VBoxContainer
-@export var scroll_container: ScrollContainer
+@export_group("Nodes")
+#@export var expression_vbox: VBoxContainer
+#@export var scroll_container: ScrollContainer
 
+@export var view_holder: MathExpressionHolder
 var expression_view: MathExpressionView
 var target_result: AlgebraVariable
 
@@ -17,21 +19,22 @@ var target_result: AlgebraVariable
 @export var expression_holder_scene: PackedScene
 
 func _ready() -> void:
+	expression_view = view_holder.expression_view
 	virtual_numpad.send_result.connect(check_result)
 	generateNewExpression()
 
 func generateNewExpression() -> void:
-	var expression_holder: MathExpressionHolder = expression_holder_scene.instantiate()
-	expression_view = expression_holder.expression_view
+	#var expression_holder: MathExpressionHolder = expression_holder_scene.instantiate()
+	#expression_view = expression_holder.expression_view
 	
 	var expression_string = random_gen.generate_expression_string()
 	var expression = MathExpression.create_from_string(expression_string)
 	self.target_result = expression.solve()
 	
-	expression_vbox.add_child(expression_holder)
+	#expression_vbox.add_child(expression_holder)
 	update_view(expression_string)
 	await get_tree().process_frame
-	scroll_container.ensure_control_visible(expression_holder)
+	#scroll_container.ensure_control_visible(expression_holder)
 
 func update_view(string: String):
 	expression_view.show_expression(string)
