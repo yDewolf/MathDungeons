@@ -11,16 +11,18 @@
 
 [node name="MathTest" type="Node"]
 
-[node name="ScoreHandler" type="Node" parent="." node_paths=PackedStringArray("expression_handler")]
+[node name="ScoreHandler" type="Node" parent="." node_paths=PackedStringArray("expression_handler", "score_view", "combo_view")]
 script = ExtResource("4_wr8ep")
 expression_handler = NodePath("../ExpressionHandler")
+score_view = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/ScoreView")
+combo_view = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/ComboView")
 metadata/_custom_type_script = "uid://b4sha7ob4ac47"
 
 [node name="ExpressionHandler" type="Node" parent="." node_paths=PackedStringArray("random_gen", "view_holder", "warn_label", "virtual_numpad")]
 script = ExtResource("1_gvqed")
 random_gen = NodePath("../RandomEquationGen")
-view_holder = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/PanelContainer")
-warn_label = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/PanelContainer/Warning")
+view_holder = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/PanelContainer")
+warn_label = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/PanelContainer/Warning")
 virtual_numpad = NodePath("../UI/PanelContainer/VBoxContainer/VirtualNumpad")
 expression_holder_scene = ExtResource("4_h0gn3")
 
@@ -53,6 +55,7 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="UI/PanelContainer/VBoxContainer"]
+texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 50
@@ -60,11 +63,23 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 20
 
-[node name="PanelContainer" parent="UI/PanelContainer/VBoxContainer/MarginContainer2" instance=ExtResource("4_h0gn3")]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/VBoxContainer/MarginContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Warning" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/PanelContainer" instance=ExtResource("1_npv4y")]
+[node name="ScoreView" type="RichTextLabel" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+bbcode_enabled = true
+text = "Score: "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer" instance=ExtResource("4_h0gn3")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Warning" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/PanelContainer" instance=ExtResource("1_npv4y")]
 visible = false
 custom_minimum_size = Vector2(0, 32.89)
 layout_mode = 2
@@ -72,6 +87,14 @@ text = "Acertou!!"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = null
+
+[node name="ComboView" type="RichTextLabel" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+bbcode_enabled = true
+text = "0 Combo"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/VBoxContainer"]
 layout_mode = 2

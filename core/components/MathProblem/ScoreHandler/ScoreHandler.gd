@@ -2,6 +2,10 @@ extends Node
 class_name ScoreHandler
 
 @export var expression_handler: ExpressionHandler
+
+@export var score_view: RichTextLabel
+@export var combo_view: RichTextLabel
+
 var rng: RandomEquationGen
 
 var current_score: int:
@@ -9,6 +13,7 @@ var current_score: int:
 		current_score = value
 		print("Current Score: ", self.current_score)
 		self.updated_score.emit(self.current_score)
+var combo: int = 0
 
 @export_category("General Score")
 @export var general_score_multiplier: float = 0.1
@@ -48,6 +53,8 @@ func _ready() -> void:
 	expression_handler.generated_expression.connect(update_score_multiplier)
 	expression_handler.sent_wrong_answer.connect(update_score)
 	expression_handler.solved_expression.connect(update_score.bind(true))
+	
+	self.updated_score.connect(update_view)
 
 func update_score_multiplier(expression: MathExpression) -> void:
 	self.expression_value = calculate_expression_score_value(expression)
@@ -55,10 +62,28 @@ func update_score_multiplier(expression: MathExpression) -> void:
 
 func update_score(correct_answer: bool = false):
 	if correct_answer:
+		combo += 1
 		self.current_score += expression_value * self.score_multiplier
 		return
 	
+	combo = 0
 	self.current_score += expression_value * self.score_multiplier * -1
+
+
+func update_view(score: int):
+	self.score_view.text = "Score: " + str(self.current_score) + ""
+	
+	var combo_effects = ""
+	var effects_close = ""
+	if self.combo >= 5:
+		combo_effects += "[wave amp=50.0 freq=5.0 connected=1]"
+		effects_close += "[/wave]"
+	
+	if self.combo >= 7:
+		combo_effects += "[rainbow freq=0.7 sat=0.8 val=1 speed=1.0]"
+		effects_close = "[/rainbow]" + effects_close
+	
+	self.combo_view.text = combo_effects + str(self.combo) + effects_close + " Combo"
 
 
 func calculate_score_multiplier(expression: MathExpression) -> float:
