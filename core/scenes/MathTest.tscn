@@ -1,14 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://b8ow2nsxtjtj3"]
+[gd_scene load_steps=9 format=3 uid="uid://b8ow2nsxtjtj3"]
 
 [ext_resource type="Script" uid="uid://bacuyqjyjfuo7" path="res://core/components/Math/Equations/ExpressionHandler.gd" id="1_gvqed"]
 [ext_resource type="PackedScene" uid="uid://cbie345xd8nxa" path="res://core/components/MathProblem/ui/MathExpressionView.tscn" id="1_npv4y"]
 [ext_resource type="Script" uid="uid://cpnnadgp3ccya" path="res://core/components/Math/RandomEquationGen.gd" id="2_0d0ds"]
 [ext_resource type="PackedScene" uid="uid://cnvfl67tvkvm5" path="res://core/components/MathProblem/ui/MathExpressionHolder.tscn" id="4_h0gn3"]
 [ext_resource type="Theme" uid="uid://bfqj2vwf5wtg4" path="res://assets/themes/NumpadTheme.tres" id="4_radsl"]
+[ext_resource type="Script" uid="uid://b4sha7ob4ac47" path="res://core/components/MathProblem/ScoreHandler/ScoreHandler.gd" id="4_wr8ep"]
 [ext_resource type="Script" uid="uid://x3tntnkahsqy" path="res://core/components/MathProblem/ui/numpad/NumpadButton.gd" id="5_5xw58"]
 [ext_resource type="PackedScene" uid="uid://dyl0664juyqfg" path="res://core/components/MathProblem/ui/numpad/VirtualNumpad.tscn" id="5_radsl"]
 
 [node name="MathTest" type="Node"]
+
+[node name="ScoreHandler" type="Node" parent="." node_paths=PackedStringArray("expression_handler")]
+script = ExtResource("4_wr8ep")
+expression_handler = NodePath("../ExpressionHandler")
+metadata/_custom_type_script = "uid://b4sha7ob4ac47"
 
 [node name="ExpressionHandler" type="Node" parent="." node_paths=PackedStringArray("random_gen", "view_holder", "warn_label", "virtual_numpad")]
 script = ExtResource("1_gvqed")

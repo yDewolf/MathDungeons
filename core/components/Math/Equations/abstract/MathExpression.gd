@@ -138,6 +138,25 @@ func get_operations(sorted: bool = false) -> Array[MathOperation]:
 func get_variables() -> Array[AlgebraVariable]:
 	return MathExpression._get_variables(self.expression_map)
 
+## Recursive function
+func get_all_operations() -> Array[MathOperation]:
+	var operations: Array[MathOperation] = self.get_operations()
+	
+	var sub_expressions: Array[MathExpression] = self.get_sub_expressions(false)
+	for expression in sub_expressions:
+		operations.append_array(expression.get_all_operations())
+	
+	return operations
+
+func get_all_variables() -> Array[AlgebraVariable]:
+	var variables: Array[AlgebraVariable] = self.get_variables()
+	
+	var sub_expressions: Array[MathExpression] = self.get_sub_expressions(false)
+	for expression in sub_expressions:
+		variables.append_array(expression.get_all_variables())
+	
+	return variables
+
 
 static func _get_sub_expressions(map: Array, sorted: bool = false) -> Array[MathExpression]:
 	var expressions: Array[MathExpression] = []
