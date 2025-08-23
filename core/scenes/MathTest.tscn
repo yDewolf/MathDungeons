@@ -14,11 +14,13 @@ bg_color = Color(0.1364, 0.17402, 0.22, 1)
 
 [node name="MathTest" type="Node"]
 
-[node name="ScoreHandler" type="Node" parent="." node_paths=PackedStringArray("expression_handler", "score_view", "combo_view")]
+[node name="ScoreHandler" type="Node" parent="." node_paths=PackedStringArray("expression_handler", "score_view", "combo_view", "miss_count_label", "correct_answers_label")]
 script = ExtResource("4_wr8ep")
 expression_handler = NodePath("../ExpressionHandler")
-score_view = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/ScoreView")
+score_view = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer2/ScoreView")
 combo_view = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/ComboView")
+miss_count_label = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/Misscount")
+correct_answers_label = NodePath("../UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer/TotalAnswered")
 metadata/_custom_type_script = "uid://b4sha7ob4ac47"
 
 [node name="ExpressionHandler" type="Node" parent="." node_paths=PackedStringArray("random_gen", "view_holder", "warn_label", "virtual_numpad")]
@@ -72,11 +74,15 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScoreView" type="RichTextLabel" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScoreView" type="RichTextLabel" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
+size_flags_horizontal = 3
 bbcode_enabled = true
-text = "Score: "
+text = "Score: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -87,8 +93,32 @@ size_flags_vertical = 3
 [node name="ComboView" type="RichTextLabel" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
+size_flags_horizontal = 3
 bbcode_enabled = true
 text = "0 Combo"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Misscount" type="RichTextLabel" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 15
+bbcode_enabled = true
+text = "Misses: 999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TotalAnswered" type="RichTextLabel" parent="UI/PanelContainer/VBoxContainer/MarginContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 15
+bbcode_enabled = true
+text = "Correct: 999"
 horizontal_alignment = 1
 vertical_alignment = 1
 

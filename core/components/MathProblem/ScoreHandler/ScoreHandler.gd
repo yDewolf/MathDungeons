@@ -6,6 +6,18 @@ class_name ScoreHandler
 @export var score_view: RichTextLabel
 @export var combo_view: RichTextLabel
 
+@export var miss_count_label: RichTextLabel
+var miss_count: int = 0:
+	set(value):
+		miss_count = value
+		miss_count_label.text = "Misses: " + str(miss_count)
+@export var correct_answers_label: RichTextLabel
+var total_correct_answers: int = 0:
+	set(value):
+		total_correct_answers = value
+		correct_answers_label.text = "Answered: " + str(total_correct_answers)
+
+
 var rng: RandomEquationGen
 
 var current_score: int:
@@ -49,6 +61,10 @@ var expression_value: int = 0
 signal updated_score()
 
 func _ready() -> void:
+	miss_count = 0
+	total_correct_answers = 0
+	current_score = 0
+	
 	rng = expression_handler.random_gen
 	expression_handler.generated_expression.connect(update_score_multiplier)
 	expression_handler.sent_wrong_answer.connect(update_score)
@@ -63,10 +79,12 @@ func update_score_multiplier(expression: MathExpression) -> void:
 func update_score(correct_answer: bool = false):
 	if correct_answer:
 		combo += 1
+		total_correct_answers += 1
 		self.current_score += round(expression_value * self.score_multiplier)
 		return
 	
 	combo = 0
+	miss_count += 1
 	self.current_score += round(expression_value * self.score_multiplier * -1)
 
 
